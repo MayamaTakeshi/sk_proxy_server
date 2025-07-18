@@ -1,0 +1,33 @@
+====================================================
+2013/04/08 takeshi:
+
+after adding minijson:set_float and then support for SK_UserTimer in switchkitjson, we rebuilt switchkitproxy, however, setting ut.Seconds=1 caused the SK_UserTimerAck to be received after 8 seconds. So it seems this cannot be used if we are using socket select by ourselves (as the SK Docs says SK uses socket select to check if timer has expired or not)
+
+====================================================
+2013/06/30 takeshi:
+
+We added a call to skj_closeConnection() before exiting when we detect the client has closed the connection with us. However, although we can see LLC maintenance log confirms it detected the closing of the socket and started release of the channels used by the app ...
+
+Jun 30 2013 10:13:50: 
+     +--------------------------------------------------------------------+
+     |                       APPLICATION 12 DROPPED                       |
+     +--------------------------------------------------------------------+
+     | Application 12 was watching group(s):                              |
+     | VDAC                                                               |
+     +--------------------------------------------------------------------+
+     | Application 12 was processing calls on 1 channels                  |
+     | (sp:(0x32) ch:(0x1d) in state:(Clean Up))                          |
+     | These channels will be released.                                   |
+     +--------------------------------------------------------------------+
+     | Application 12 was outseizing on 0 channels                        |
+     +--------------------------------------------------------------------+
+     | Application 12 was monitoring 0 channel(s)                         |
+     +--------------------------------------------------------------------+
+
+... we verified that the release actually takes more than 35 seconds:
+
+2013/06/30 10:14:26	"ChannelReleased
+AIBs: [ Channel(50:29) ]"
+
+
+This is happening with VDAC channels and maybe doesn't affect ISDN/SS7 channels because when we experiment with them with SKLab, if we terminate SKLab while keeping calls alive, they are immediately released. And if we try with VDAC channels in SKLab they are not immediately released when SKLab is closed.
