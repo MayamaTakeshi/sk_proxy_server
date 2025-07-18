@@ -3,6 +3,10 @@ This is a server app that permits to client apps to interact with Dialogic Excel
 
 ## Building
 
+This app is known to run on CentOS 3.9 and CentOS 4.7.
+
+Other distros might work too but you might need to do some adjustments.
+
 You need the have the following folder structure:
 
 ```
