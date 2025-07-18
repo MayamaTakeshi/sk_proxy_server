@@ -19,53 +19,53 @@ some_root_folder
 
 Then you need to have switchkit installed (you must have obtained it from Dialogic)
 ```
-  unzip SK831b104_linux.zip # you might have another version. It is OK.
-  chmod +x install.sh
-  ./install.sh
-  # when asked, set installation folder to be at /opt/switchkit/8.3
+unzip SK831b104_linux.zip # you might have another version. It is OK.
+chmod +x install.sh
+./install.sh
+# when asked, set installation folder to be at /opt/switchkit/8.3
 ```
 
 Compile sk_proxy_server
 ```
-  cd sk_proxy_server
-  make
+cd sk_proxy_server
+make
 ```
 
-## Running sk_log_parser
+## Running sk_proxy_server
 
-Before running it do some preparations to have SK logs being generated on a determined folder and removed regularly:
+Before running sk_proxy_server, do some preparations to have SK logs being generated on a specific folder and removed regularly:
 
 Create log folder:
 ```
-  mkdir /var/log/switchkit
+mkdir /var/log/switchkit
 ```
 
 Set SK_LOG_DIR in /etc/profile:
 ```
-  export SK_LOG_DIR=/var/log/switchkit
+export SK_LOG_DIR=/var/log/switchkit
 ```
 
 Source /etc/profile for the above to take effect:
 ```
-  . /etc/profile
+. /etc/profile
 ```
 
 Create cron job to remove old log files:
 ```
-  # add a file named del_old_sk_log_files to /etc/cron.daily with:
+# add a file named del_old_sk_log_files to /etc/cron.daily with:
 
-  #!/bin/bash
-  # delete all files older than 3 days
-  find /var/log/switchkit -name "*.log" -mtime +3 -exec rm {} \;
+#!/bin/bash
+# delete all files older than 3 days
+find /var/log/switchkit -name "*.log" -mtime +3 -exec rm {} \;
 
-  # enable execution of that script: 
-  chmod +x /etc/cron.daily/del_old_sk_log_files
+# enable execution of that script: 
+chmod +x /etc/cron.daily/del_old_sk_log_files
 ```
  
 Run sk_proxy_server:
 ```
-  cd sk_proxy_server
-  ./sk_proxy_server
+cd sk_proxy_server
+./sk_proxy_server
 ```
 
 Now to test connection and interaction with it you can use telnet.
