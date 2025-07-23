@@ -150,14 +150,14 @@ int initialize(int fd, void *data, char *line, int len) {
 		return 0;
 	}
 	if(strcmp("skj_initialize", p) != 0) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no skj_initialize specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no skj_initialize specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no appName specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no appName specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
@@ -165,7 +165,7 @@ int initialize(int fd, void *data, char *line, int len) {
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no appVersion specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no appVersion specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
@@ -173,7 +173,7 @@ int initialize(int fd, void *data, char *line, int len) {
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no appDescription specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no appDescription specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
@@ -181,7 +181,7 @@ int initialize(int fd, void *data, char *line, int len) {
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no instanceId specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no instanceId specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
@@ -189,7 +189,7 @@ int initialize(int fd, void *data, char *line, int len) {
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no host specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no host specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
@@ -197,13 +197,13 @@ int initialize(int fd, void *data, char *line, int len) {
 
 	p = strtok(NULL, " ");
 	if(!p) {
-		reply = "{\"_event_\": \"handshake_failed\", \"Reason\": \"no port specified\"}\n";
+		reply = "{\"event\": \"handshake_failed\", \"Reason\": \"no port specified\"}\n";
 		write(fd, reply, strlen(reply));
 		return 0;
 	}
 	port = atoi(p);
 
-	reply = "{\"_event_\": \"handshake_ok\"}\n";
+	reply = "{\"event\": \"handshake_ok\"}\n";
 	write(fd, reply, strlen(reply));
 
 	int sz = sizeof(json_buf);
